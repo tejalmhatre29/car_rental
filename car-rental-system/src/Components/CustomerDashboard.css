@@ -1,0 +1,23 @@
+.customer-container{
+text-align:center;
+margin-top:100px;
+}
+
+.customer-menu{
+margin-top:30px;
+}
+
+.customer-menu button{
+margin:10px;
+padding:12px 25px;
+font-size:16px;
+background-color:#28a745;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+.customer-menu button:hover{
+background-color:#1e7e34;
+}
