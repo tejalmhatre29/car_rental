@@ -35,3 +35,23 @@ cursor:pointer;
 button:hover{
 background:#1e7e34;
 }
+
+
+/* Signup Text */
+.signup-text {
+  margin-top: 18px;
+  font-size: 14px;
+  color: #000000; /* black text */
+}
+
+.signup-text a {
+  color: #007bff; /* bright blue */
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.signup-text a:hover {
+  color: #0056b3; /* darker blue on hover */
+  text-decoration: underline;
+}

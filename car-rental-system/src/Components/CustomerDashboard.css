@@ -1,23 +1,64 @@
-.customer-container{
-text-align:center;
-margin-top:100px;
+.customer-container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 20px;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.customer-menu{
-margin-top:30px;
+.dashboard-title {
+  font-size: 36px;
+  color: #007bff;
+  margin-bottom: 40px;
+  font-weight: 700;
 }
 
-.customer-menu button{
-margin:10px;
-padding:12px 25px;
-font-size:16px;
-background-color:#28a745;
-color:white;
-border:none;
-border-radius:5px;
-cursor:pointer;
+/* Cards layout */
+.dashboard-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
 }
 
-.customer-menu button:hover{
-background-color:#1e7e34;
+/* Individual card */
+.dashboard-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  height: 150px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  text-decoration: none;
+  color: #333;
+  padding: 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.dashboard-card h2 {
+  margin: 0 0 10px 0;
+  font-size: 22px;
+}
+
+.dashboard-card p {
+  font-size: 14px;
+  color: #555;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* Special styling for logout */
+.logout-card {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.logout-card:hover {
+  background: #f5c6cb;
 }

@@ -1,34 +1,29 @@
 import { Link } from "react-router-dom";
 import "./CustomerDashboard.css";
 
-function CustomerDashboard(){
+function CustomerDashboard() {
+  return (
+    <div className="customer-container">
+      <h1 className="dashboard-title">Customer Dashboard</h1>
 
-return(
+      <div className="dashboard-cards">
+        <Link to="/cars" className="dashboard-card">
+          <h2>🚗 View Cars</h2>
+          <p>Browse all available cars to rent.</p>
+        </Link>
 
-<div className="customer-container">
+        <Link to="/book" className="dashboard-card">
+          <h2>📅 Book Car</h2>
+          <p>Select a car and reserve it instantly.</p>
+        </Link>
 
-<h1>Customer Dashboard</h1>
-
-<div className="customer-menu">
-
-<Link to="/cars">
-<button>View Cars</button>
-</Link>
-
-<Link to="/book">
-<button>Book Car</button>
-</Link>
-
-<Link to="/">
-<button>Logout</button>
-</Link>
-
-</div>
-
-</div>
-
-);
-
+        <Link to="/" className="dashboard-card logout-card">
+          <h2>🔒 Logout</h2>
+          <p>Sign out of your account safely.</p>
+        </Link>
+      </div>
+    </div>
+  );
 }
 
 export default CustomerDashboard;

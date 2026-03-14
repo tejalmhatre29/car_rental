@@ -172,27 +172,63 @@ res.send({message:"Car updated"});
 
 });
 
+
 /* BOOK CAR */
-
 app.post("/bookcar",(req,res)=>{
+  const {user_id, car_id, start_date, end_date} = req.body;
 
-const {user_id,car_id,start_date,end_date} = req.body;
+  // Check if car is available
+  db.query("SELECT available FROM cars WHERE id=?",[car_id], (err,result)=>{
+    if(err) return res.send({message:"Database error"});
+    if(result[0].available === 0){
+      return res.send({message:"Car not available"});
+    }
 
-const sql="INSERT INTO bookings(user_id,car_id,start_date,end_date,status) VALUES (?,?,?,?,?)";
+    // Insert booking
+    const sql="INSERT INTO bookings(user_id,car_id,start_date,end_date,status) VALUES (?,?,?,?,?)";
+    db.query(sql,[user_id,car_id,start_date,end_date,"Booked"],(err,result)=>{
+      if(err) return res.send({message:"Booking failed"});
 
-db.query(sql,[user_id,car_id,start_date,end_date,"Booked"],(err,result)=>{
-
-if(err){
-console.log(err);
-return res.send({message:"Booking failed"});
-}
-
-res.send({message:"Car Booked"});
-
+      // Mark car as unavailable
+      db.query("UPDATE cars SET available=0 WHERE id=?",[car_id],(err2)=>{
+        if(err2) console.log(err2);
+        res.send({message:"Car booked successfully"});
+      });
+    });
+  });
 });
 
+/* VIEW BOOKINGS */
+app.get("/admin/bookings",(req,res)=>{
+  const sql = `SELECT b.id, u.name AS user_name, c.car_name, c.brand, c.price_per_day, b.start_date, b.end_date, b.status
+               FROM bookings b
+               JOIN users u ON b.user_id=u.id
+               JOIN cars c ON b.car_id=c.id`;
+  db.query(sql,(err,result)=>{
+    if(err) return res.send(err);
+    res.json(result);
+  });
 });
 
+
+
+
+
+
+
+
+
+app.get("/user/bookings/:user_id",(req,res)=>{
+  const user_id = req.params.user_id;
+  const sql = `SELECT b.id, c.car_name, c.brand, c.price_per_day, b.start_date, b.end_date, b.status
+               FROM bookings b
+               JOIN cars c ON b.car_id=c.id
+               WHERE b.user_id=?`;
+  db.query(sql,[user_id],(err,result)=>{
+    if(err) return res.send(err);
+    res.json(result);
+  });
+});
 
 /* START SERVER */
 
