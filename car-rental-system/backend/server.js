@@ -92,22 +92,20 @@ res.send({message:"Invalid credentials"});
 
 app.post("/addcar",(req,res)=>{
 
-const {car_name,brand,price_per_day} = req.body;
+const {car_name,brand,owner_name,price_per_day} = req.body;
 
-const sql="INSERT INTO cars(car_name,brand,price_per_day) VALUES (?,?,?)";
+const sql="INSERT INTO cars(car_name,brand,owner_name,price_per_day) VALUES (?,?,?,?)";
 
-db.query(sql,[car_name,brand,price_per_day],(err,result)=>{
+db.query(sql,[car_name,brand,owner_name,price_per_day],(err,result)=>{
 
-if(err){
-console.log(err);
-return res.send({message:"Error adding car"});
-}
+if(err) throw err;
 
-res.send({message:"Car Added"});
+res.send({message:"Car Added Successfully"});
 
 });
 
 });
+
 
 
 /* VIEW CARS */

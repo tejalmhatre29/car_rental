@@ -7,6 +7,8 @@ import CustomerDashboard from "./Components/CustomerDashboard";
 import AddCar from "./Components/AddCar";
 import ViewCars from "./Components/ViewCars";
 import BookCar from "./Components/BookCar";
+import PaymentPage from "./Components/PaymentPage";
+
 
 function App(){
 
@@ -23,6 +25,7 @@ return(
 <Route path="/addcar" element={<AddCar/>}/>
 <Route path="/cars" element={<ViewCars/>}/>
 <Route path="/book" element={<BookCar/>}/>
+<Route path="/payment" element={<PaymentPage />} />
 
 </Routes>
 

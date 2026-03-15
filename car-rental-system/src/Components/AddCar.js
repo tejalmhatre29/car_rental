@@ -36,11 +36,30 @@ return(
 
 <form onSubmit={handleSubmit}>
 
-<input name="car_name" placeholder="Car Name" onChange={handleChange}/>
+<input 
+name="car_name"
+placeholder="Car Name"
+onChange={handleChange}
+/>
 
-<input name="brand" placeholder="Brand" onChange={handleChange}/>
+<input 
+name="brand"
+placeholder="Brand"
+onChange={handleChange}
+/>
 
-<input name="price_per_day" placeholder="Price per day" onChange={handleChange}/>
+<input 
+name="owner_name"
+placeholder="Owner Name"
+onChange={handleChange}
+/>
+
+<input 
+name="price_per_day"
+placeholder="Price per day"
+onChange={handleChange}
+/>
+
 
 <button>Add</button>
 
