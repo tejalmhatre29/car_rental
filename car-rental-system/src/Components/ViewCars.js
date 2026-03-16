@@ -42,18 +42,23 @@ function AvailableCars() {
 
           <div className="car-card" key={car.id}>
 
-            <h3>{car.car_name}</h3>
-            <p className="brand">{car.brand}</p>
-            <p className="price">₹{car.price_per_day}/day</p>
+<h3>{car.car_name}</h3>
 
-            <button
-              className="book-btn"
-              onClick={() => bookCar(car)}
-            >
-              Book Now
-            </button>
+<p className="brand">{car.brand}</p>
 
-          </div>
+<p className="owner">Owner: {car.owner_name}</p>
+
+<p className="price">₹{car.price_per_day}/day</p>
+
+<button
+className="book-btn"
+onClick={() => bookCar(car)}
+>
+Book Now
+</button>
+
+</div>
+
 
         ))}
 
