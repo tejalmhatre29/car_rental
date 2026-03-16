@@ -172,29 +172,58 @@ res.send({message:"Car updated"});
 
 
 /* BOOK CAR */
-app.post("/bookcar",(req,res)=>{
-  const {user_id, car_id, start_date, end_date} = req.body;
+
+app.post("/bookcar", (req, res) => {
+
+  const {
+    user_id,
+    car_id,
+    start_date,
+    end_date,
+    pickup_location,
+    drop_location
+  } = req.body;
 
   // Check if car is available
-  db.query("SELECT available FROM cars WHERE id=?",[car_id], (err,result)=>{
-    if(err) return res.send({message:"Database error"});
-    if(result[0].available === 0){
-      return res.send({message:"Car not available"});
+  db.query("SELECT available FROM cars WHERE id=?", [car_id], (err, result) => {
+
+    if (err) {
+      console.log(err);
+      return res.json({ message: "Database error" });
     }
 
-    // Insert booking
-    const sql="INSERT INTO bookings(user_id,car_id,start_date,end_date,status) VALUES (?,?,?,?,?)";
-    db.query(sql,[user_id,car_id,start_date,end_date,"Booked"],(err,result)=>{
-      if(err) return res.send({message:"Booking failed"});
+    if (result[0].available === 0) {
+      return res.json({ message: "Car not available" });
+    }
 
-      // Mark car as unavailable
-      db.query("UPDATE cars SET available=0 WHERE id=?",[car_id],(err2)=>{
-        if(err2) console.log(err2);
-        res.send({message:"Car booked successfully"});
-      });
-    });
+    const sql = `
+      INSERT INTO bookings
+      (user_id, car_id, start_date, end_date, pickup_location, drop_location, status)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    db.query(
+      sql,
+      [user_id, car_id, start_date, end_date, pickup_location, drop_location, "Booked"],
+      (err, result) => {
+
+        if (err) {
+          console.log(err);
+          return res.json({ message: "Booking failed" });
+        }
+
+        // Make car unavailable
+        db.query("UPDATE cars SET available = 0 WHERE id=?", [car_id]);
+
+        res.json({ message: "Car booked successfully!" });
+
+      }
+    );
+
   });
+
 });
+
 
 /* VIEW BOOKINGS */
 app.get("/admin/bookings",(req,res)=>{

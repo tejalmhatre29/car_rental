@@ -9,6 +9,11 @@ function BookCar({ userId }) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [showPayment, setShowPayment] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("card");
+  const [locations, setLocations] = useState({
+  pickup_location: "",
+  drop_location: ""
+});
+
 
   useEffect(() => {
     fetch("http://localhost:5000/cars")
@@ -52,25 +57,36 @@ function BookCar({ userId }) {
     setShowPayment(true);
   };
 
-  const confirmBooking = () => {
+ const confirmBooking = () => {
 
-    fetch("http://localhost:5000/bookcar", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user_id: userId,
-        car_id: selectedCar.id,
-        start_date: dates.start_date,
-        end_date: dates.end_date
-      })
+  fetch("http://localhost:5000/bookcar", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      user_id: userId,
+      car_id: selectedCar.id,
+      start_date: dates.start_date,
+      end_date: dates.end_date,
+      pickup_location: locations.pickup_location,
+      drop_location: locations.drop_location
     })
-      .then(res => res.json())
-      .then(res => {
-        alert("Payment Successful!\n" + res.message);
-        setShowPayment(false);
-      });
+  })
+    .then(res => res.json())
+    .then(res => {
+      alert("Payment Successful!\n" + res.message);
+      setShowPayment(false);
+    });
 
-  };
+};
+
+
+  const handleLocationChange = (e) => {
+  setLocations({
+    ...locations,
+    [e.target.name]: e.target.value
+  });
+};
+
 
   return (
 
@@ -125,6 +141,27 @@ function BookCar({ userId }) {
             onChange={handleChange}
             required
           />
+
+          <label>Pickup Location</label>
+<input
+  type="text"
+  name="pickup_location"
+  placeholder="Enter pickup location"
+  value={locations.pickup_location}
+  onChange={handleLocationChange}
+  required
+/>
+
+<label>Drop Location</label>
+<input
+  type="text"
+  name="drop_location"
+  placeholder="Enter drop location"
+  value={locations.drop_location}
+  onChange={handleLocationChange}
+  required
+/>
+
 
           {totalPrice > 0 && (
             <p className="total-price">
