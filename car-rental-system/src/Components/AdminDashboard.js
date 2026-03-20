@@ -32,94 +32,71 @@ return(
 
 <div className="admin-dashboard">
 
-<header className="admin-header">
+  <div className="bg-effect"></div>
 
-<h2>Car Rental Admin Panel</h2>
+  <header className="admin-header">
 
-<Link to="/">
-<button className="logout-btn">Logout</button>
-</Link>
+    <h2>Car Rental Admin Panel</h2>
 
-</header>
+    <Link to="/">
+      <button className="logout-btn">Logout</button>
+    </Link>
 
+  </header>
 
-<div className="admin-content">
+  <div className="admin-content">
 
-<h1>Dashboard Overview</h1>
+    <h1>Dashboard Overview</h1>
 
+    <div className="stats-container">
 
-{/* Real Time Stats */}
+      <div className="stat-box">
+        <h3>Total Cars</h3>
+        <p>{stats.totalCars}</p>
+      </div>
 
-<div className="stats-container">
+      <div className="stat-box">
+        <h3>Total Users</h3>
+        <p>{stats.totalUsers}</p>
+      </div>
 
-<div className="stat-box">
-<h3>Total Cars</h3>
-<p>{stats.totalCars}</p>
-</div>
+      <div className="stat-box">
+        <h3>Total Bookings</h3>
+        <p>{stats.totalBookings}</p>
+      </div>
 
-<div className="stat-box">
-<h3>Total Users</h3>
-<p>{stats.totalUsers}</p>
-</div>
+      <div className="stat-box">
+        <h3>Available Cars</h3>
+        <p>{stats.availableCars}</p>
+      </div>
 
-<div className="stat-box">
-<h3>Total Bookings</h3>
-<p>{stats.totalBookings}</p>
-</div>
+    </div>
 
-<div className="stat-box">
-<h3>Available Cars</h3>
-<p>{stats.availableCars}</p>
-</div>
+    <h2 className="section-title">Quick Actions</h2>
 
-</div>
+    <div className="admin-cards">
 
+      <Link to="/addcar" className="card">
+        <h3>Add Car</h3>
+        <p>Add new cars to the system</p>
+      </Link>
 
-{/* Quick Actions */}
+      <Link to="/cars" className="card">
+        <h3>View Cars</h3>
+        <p>See all available cars</p>
+      </Link>
 
-<h2 className="section-title">Quick Actions</h2>
+      <Link to="/cars" className="card">
+        <h3>Manage Cars</h3>
+        <p>Edit or delete cars</p>
+      </Link>
 
-<div className="admin-cards">
+    </div>
 
-<Link to="/addcar" className="card">
-<h3>Add Car</h3>
-<p>Add new cars to the system</p>
-</Link>
-
-<Link to="/cars" className="card">
-<h3>View Cars</h3>
-<p>See all available cars</p>
-</Link>
-
-<Link to="/cars" className="card">
-<h3>Manage Cars</h3>
-<p>Edit or delete cars</p>
-</Link>
-
-</div>
-
-
-{/* Recent Activity */}
-
-<div className="recent-section">
-
-<h2>Recent Activity</h2>
-
-<ul className="activity-list">
-
-<li>New user registered</li>
-<li>Car added to inventory</li>
-<li>Booking confirmed</li>
-<li>Car details updated</li>
-
-</ul>
+  </div>
 
 </div>
 
-
-</div>
-
-</div>
 
 );
 
