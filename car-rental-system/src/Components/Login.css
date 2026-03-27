@@ -1,103 +1,674 @@
-/* Global */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(rgba(30, 60, 114, 0.7), rgba(42, 82, 152, 0.7)),
-              url('https://img.freepik.com/premium-vector/car-rental-concept-illustration_114360-9267.jpg');
-  background-size: cover;
-  background-position: center;
+.login-page {
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 100vh;
-  margin: 0;
+  justify-content: flex-start;
+  padding: 2rem 1.25rem 3rem;
+  position: relative;
+  overflow-x: hidden;
 }
 
-/* Container */
-.login-container {
-  width: 360px;
-  background: rgba(255, 255, 255, 0.95); /* Slight transparency to show background */
-  padding: 40px 30px;
-  border-radius: 15px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+.login-bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.login-aurora {
+  position: fixed;
+  inset: -40% -20%;
+  background:
+    radial-gradient(ellipse 50% 40% at 20% 20%, rgba(34, 211, 238, 0.12), transparent 55%),
+    radial-gradient(ellipse 40% 35% at 80% 30%, rgba(59, 130, 246, 0.1), transparent 50%),
+    radial-gradient(ellipse 60% 50% at 50% 100%, rgba(14, 165, 233, 0.08), transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+  animation: login-aurora-drift 18s ease-in-out infinite alternate;
+}
+
+@keyframes login-aurora-drift {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(-2%, 2%) scale(1.03);
+  }
+}
+
+/* —— 3D scene —— */
+
+.login-hero-3d {
+  position: relative;
+  width: min(640px, 100%);
+  height: 220px;
+  margin-bottom: 0.25rem;
+  z-index: 1;
+  perspective: 1100px;
+  perspective-origin: 50% 35%;
+}
+
+.login-scene-3d {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.login-scene-perspective {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transform-style: preserve-3d;
+  /* Subtle "camera wobble" while the car drives in */
+  animation: login-camera-wobble 3.2s ease-in-out both;
+}
+
+.login-road-3d {
+  position: relative;
+  width: 92%;
+  height: 120px;
+  transform-origin: 50% 100%;
+  transform: rotateX(58deg) translateZ(-20px) scale(1.05);
+  background:
+    linear-gradient(180deg, #1e293b 0%, #0f172a 40%, #020617 100%);
+  border-radius: 10px;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -20px 40px rgba(0, 0, 0, 0.55),
+    0 24px 50px rgba(0, 0, 0, 0.65);
+  overflow: hidden;
+  border: 1px solid rgba(56, 189, 248, 0.12);
+}
+
+.login-road-3d::after {
+  content: "";
+  position: absolute;
+  inset: -30px -60px;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(34, 211, 238, 0.1) 35%,
+    rgba(34, 211, 238, 0) 65%
+  );
+  filter: blur(14px);
+  opacity: 0;
+  transform: translateX(-20%);
+  pointer-events: none;
+  animation: login-road-blur 3.2s ease-in-out both;
+}
+
+.login-road-edge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  background: repeating-linear-gradient(
+    180deg,
+    #fbbf24 0 18px,
+    #0f172a 18px 36px
+  );
+  opacity: 0.85;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.login-road-edge--left {
+  left: 0;
+  border-radius: 10px 0 0 10px;
+}
+
+.login-road-edge--right {
+  right: 0;
+  border-radius: 0 10px 10px 0;
+}
+
+.login-road-lanes {
+  position: absolute;
+  bottom: 28%;
+  left: 12%;
+  right: 12%;
+  height: 4px;
+  transform: translateY(-50%);
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.92) 0 28px,
+    transparent 28px 56px
+  );
+  opacity: 0.85;
+  filter: blur(0.3px);
+  animation: login-road-flow 2.8s linear infinite;
+}
+
+@keyframes login-road-flow {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 56px 0;
+  }
+}
+
+.login-road-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.06) 45%,
+    transparent 70%
+  );
+  animation: login-shine-sweep 4s ease-in-out infinite;
+}
+
+@keyframes login-shine-sweep {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translateX(-15%);
+  }
+  50% {
+    opacity: 0.65;
+    transform: translateX(15%);
+  }
+}
+
+.login-car-track-3d {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 52px;
+  height: 80px;
+  overflow: visible;
+  transform-style: preserve-3d;
+}
+
+.login-car-3d {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 200px;
+  height: 72px;
+  transform-style: preserve-3d;
+  animation: login-car-drive-3d 3.2s cubic-bezier(0.42, 0, 0.2, 1) both;
+  filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.55));
+}
+
+.login-car-shadow {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  width: 140px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.55), transparent 70%);
+  transform: translateX(-50%) rotateX(75deg);
+  pointer-events: none;
+  animation: login-shadow-sync 3.2s ease-in-out both;
+}
+
+.login-car-svg-3d {
+  width: 200px;
+  height: 72px;
+  display: block;
+  transform: translateZ(12px);
+}
+
+.login-wheel--front {
+  transform-origin: 44px 52px;
+  animation: login-wheel-spin 0.45s linear infinite;
+}
+
+.login-wheel--rear {
+  transform-origin: 156px 52px;
+  animation: login-wheel-spin 0.45s linear infinite;
+}
+
+@keyframes login-wheel-spin {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.login-headlight-beam {
+  position: absolute;
+  right: -40px;
+  top: 22px;
+  width: 90px;
+  height: 36px;
+  background: linear-gradient(
+    90deg,
+    rgba(254, 249, 195, 0.45),
+    rgba(254, 249, 195, 0)
+  );
+  border-radius: 8px;
+  filter: blur(6px);
+  opacity: 0.85;
+  pointer-events: none;
+  animation: login-beam-pulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes login-beam-pulse {
+  from {
+    opacity: 0.45;
+  }
+  to {
+    opacity: 0.9;
+  }
+}
+
+@keyframes login-car-drive-3d {
+  0% {
+    transform: translate3d(-360px, 38px, 0) rotateY(-18deg) rotateX(7deg) scale(0.98);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translate3d(-250px, 24px, 0) rotateY(-14deg) rotateX(5deg) scale(0.99);
+  }
+  /* Acceleration into frame */
+  30% {
+    transform: translate3d(calc(25% - 70px), 10px, 18px) rotateY(-5deg) rotateX(2deg) scale(1);
+  }
+  /* Road contact + suspension dip */
+  44% {
+    transform: translate3d(calc(50% - 100px), -2px, 32px) rotateY(0deg) rotateX(0deg) scale(1.02, 0.99);
+  }
+  /* Slight recovery (bounce back) */
+  56% {
+    transform: translate3d(calc(58% - 92px), 2px, 28px) rotateY(1deg) rotateX(0deg) scale(0.995, 1.01);
+  }
+  /* Exit */
+  100% {
+    transform: translate3d(calc(100% + 160px), 14px, 0) rotateY(14deg) rotateX(4deg) scale(0.99);
+    opacity: 1;
+  }
+}
+
+@keyframes login-camera-wobble {
+  0% {
+    transform: translateY(0) rotateX(0deg);
+  }
+  25% {
+    transform: translateY(2px) rotateX(1.5deg);
+  }
+  50% {
+    transform: translateY(-1px) rotateX(-1deg);
+  }
+  100% {
+    transform: translateY(0) rotateX(0deg);
+  }
+}
+
+@keyframes login-road-blur {
+  0% {
+    opacity: 0;
+    transform: translateX(-20%);
+  }
+  15% {
+    opacity: 0.8;
+  }
+  55% {
+    opacity: 0.35;
+    transform: translateX(18%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(26%);
+  }
+}
+
+@keyframes login-shadow-sync {
+  0% {
+    transform: translateX(-50%) rotateX(75deg) scale(0.95);
+    opacity: 0.2;
+  }
+  25% {
+    opacity: 0.95;
+    transform: translateX(-50%) rotateX(75deg) scale(1);
+  }
+  44% {
+    transform: translateX(-50%) rotateX(78deg) scale(1.06, 0.96);
+  }
+  56% {
+    transform: translateX(-50%) rotateX(76deg) scale(1.01, 1.03);
+  }
+  100% {
+    opacity: 0.85;
+    transform: translateX(-50%) rotateX(75deg) scale(0.98);
+  }
+}
+
+.login-hero-tagline {
+  position: absolute;
+  left: 9px;
+  top: 17px;
+  bottom: auto;
+  width: 100%;
   text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
+  font-size: 0.72rem;
+  color: rgba(148, 163, 184, 0.95);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  animation: login-fade-in 0.8s ease 0.4s both;
 }
 
-.login-container:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+@keyframes login-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Headings */
-.login-container h2 {
-  margin-bottom: 25px;
-  color: #1e3c72;
-  font-size: 28px;
-  letter-spacing: 1px;
+.login-shell {
+  width: min(420px, 100%);
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(24px) scale(0.98);
+  pointer-events: none;
+  transition:
+    opacity 0.55s var(--transition),
+    transform 0.55s var(--transition);
 }
 
-/* Inputs */
-.login-container input {
+.login-shell--visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.login-card {
+  background: linear-gradient(155deg, var(--surface) 0%, var(--surface-2) 100%);
+  border-radius: var(--radius);
+  padding: 2rem 2rem 1.75rem;
+  box-shadow: var(--shadow-lg), 0 0 0 1px var(--border);
+  border: 1px solid var(--border);
+  animation: login-card-pop 0.55s ease 0.05s both;
+}
+
+@keyframes login-card-pop {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-card--shake {
+  animation: login-shake 0.4s ease;
+}
+
+@keyframes login-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-8px);
+  }
+  40%,
+  80% {
+    transform: translateX(8px);
+  }
+}
+
+.login-brand {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1.75rem;
+}
+
+.login-brand-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--surface-highlight), var(--navy-800));
+  color: var(--accent);
+  border-radius: 12px;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  box-shadow: 0 0 24px var(--accent-glow);
+  border: 1px solid var(--border);
+}
+
+.login-title {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.login-sub {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.login-field input {
   width: 100%;
-  padding: 12px 15px;
-  margin-top: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  font: inherit;
+  font-weight: 500;
+  background: var(--bg-elevated);
+  color: var(--text);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.login-field input::placeholder {
+  color: #64748b;
+}
+
+.login-field input:focus {
   outline: none;
-  transition: all 0.3s;
-  font-size: 14px;
+  border-color: var(--accent-dim);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
-.login-container input:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
+.login-field input.input-error {
+  border-color: rgba(248, 113, 113, 0.65);
 }
 
-/* Button */
-.login-container button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 20px;
-  background: linear-gradient(135deg, #2563eb, #1e40af);
-  color: white;
+.login-password-wrap {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+
+.login-password-wrap:focus-within {
+  border-color: var(--accent-dim);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.login-password-wrap input {
+  border: none !important;
+  box-shadow: none !important;
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+}
+
+.login-password-wrap input:focus {
+  box-shadow: none !important;
+}
+
+.toggle-visibility {
+  flex-shrink: 0;
+  padding: 0 0.85rem;
   border: none;
-  border-radius: 8px;
+  background: var(--surface-2);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  transition: all 0.3s;
+  transition: background var(--transition);
 }
 
-.login-container button:hover {
-  background: linear-gradient(135deg, #1e40af, #2563eb);
-  transform: scale(1.05);
+.toggle-visibility:hover {
+  background: var(--surface-highlight);
 }
 
-/* Signup Text */
-.signup-text {
-  margin-top: 18px;
-  font-size: 14px;
-  color: #fff; /* white for contrast on image */
+.field-error {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--danger);
 }
 
-.signup-text a {
-  color: #ffdd57;
+.field-hint {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.login-submit {
+  margin-top: 0.25rem;
+  padding: 0.85rem 1rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, #0891b2, #0e7490);
+  color: #ecfeff;
+  font: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    opacity var(--transition);
+  box-shadow: 0 12px 36px rgba(8, 145, 178, 0.35);
+}
+
+.login-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 44px rgba(34, 211, 238, 0.28);
+}
+
+.login-submit:disabled {
+  opacity: 0.85;
+  cursor: wait;
+}
+
+.login-spinner-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.login-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: login-spin 0.7s linear infinite;
+}
+
+@keyframes login-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.login-footer {
+  margin: 1.5rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.login-footer a {
+  color: var(--accent);
+  font-weight: 600;
   text-decoration: none;
-  font-weight: bold;
-  transition: all 0.3s;
 }
 
-.signup-text a:hover {
-  color: #ffd700;
+.login-footer a:hover {
   text-decoration: underline;
 }
 
-/* Optional: Small animation for container fade-in */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px);}
-  to { opacity: 1; transform: translateY(0);}
-}
+@media (prefers-reduced-motion: reduce) {
+  .login-aurora {
+    animation: none;
+  }
 
-.login-container {
-  animation: fadeIn 0.8s ease forwards;
+  .login-road-lanes {
+    animation: none;
+  }
+
+  .login-road-shine {
+    animation: none;
+  }
+
+  .login-road-3d::after {
+    animation: none;
+  }
+
+  .login-car-3d {
+    animation: none;
+    left: 50%;
+    transform: translateX(-50%) translateZ(0);
+    opacity: 1;
+  }
+
+  .login-scene-perspective {
+    animation: none;
+  }
+
+  .login-wheel--front,
+  .login-wheel--rear {
+    animation: none;
+  }
+
+  .login-headlight-beam {
+    animation: none;
+  }
+
+  .login-car-shadow {
+    animation: none;
+  }
+
+  .login-shell {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
 }

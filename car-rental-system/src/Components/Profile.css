@@ -1,10 +1,12 @@
-.addcar-page {
+.profile-page {
   min-height: 100vh;
   padding: 1.5rem 1.25rem 3rem;
   position: relative;
+  max-width: 480px;
+  margin: 0 auto;
 }
 
-.addcar-bg {
+.profile-bg {
   position: fixed;
   inset: 0;
   background-image:
@@ -15,89 +17,102 @@
   z-index: 0;
 }
 
-.addcar-header {
+.profile-header {
   position: relative;
   z-index: 1;
-  max-width: 420px;
-  margin: 0 auto 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
-.addcar-back {
+.profile-back {
   display: inline-block;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.65rem;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--accent);
   text-decoration: none;
-  transition: opacity var(--transition);
 }
 
-.addcar-back:hover {
-  opacity: 0.85;
-  text-decoration: underline;
-}
-
-.addcar-header h1 {
+.profile-header h1 {
   margin: 0;
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text);
-  letter-spacing: -0.02em;
 }
 
-.addcar-form {
+.profile-lead {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.profile-card {
   position: relative;
   z-index: 1;
-  max-width: 420px;
-  margin: 0 auto;
-  background: linear-gradient(155deg, var(--surface), var(--surface-2));
   padding: 2rem;
   border-radius: var(--radius);
+  background: linear-gradient(155deg, var(--surface), var(--surface-2));
   border: 1px solid var(--border);
   box-shadow: var(--shadow-lg);
-  animation: addcar-in 0.5s ease both;
 }
 
-@keyframes addcar-in {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.profile-warning {
+  margin: 0;
+  color: var(--warning);
 }
 
-.addcar-field {
+.profile-warning a {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.profile-muted {
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.profile-field {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  margin-bottom: 1rem;
-  font-size: 0.85rem;
+  text-align: left;
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--text-muted);
-  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
-.addcar-field input {
+.profile-field input {
   padding: 0.75rem 0.9rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
-  font: inherit;
-  font-weight: 500;
   background: var(--bg-elevated);
   color: var(--text);
+  font: inherit;
+  font-weight: 500;
+  font-size: 1rem;
+  text-transform: none;
+  letter-spacing: normal;
 }
 
-.addcar-field input:focus {
+.profile-field input:focus {
   outline: none;
   border-color: var(--accent-dim);
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
-.addcar-submit {
-  width: 100%;
+.profile-field--readonly input {
+  opacity: 0.85;
+  cursor: default;
+}
+
+.profile-save {
   margin-top: 0.5rem;
   padding: 0.85rem;
   border: none;
@@ -107,17 +122,14 @@
   font: inherit;
   font-weight: 600;
   cursor: pointer;
-  transition:
-    transform var(--transition),
-    box-shadow var(--transition);
   box-shadow: 0 10px 28px rgba(8, 145, 178, 0.35);
 }
 
-.addcar-submit:hover:not(:disabled) {
+.profile-save:hover:not(:disabled) {
   transform: translateY(-1px);
 }
 
-.addcar-submit:disabled {
+.profile-save:disabled {
   opacity: 0.85;
   cursor: wait;
 }

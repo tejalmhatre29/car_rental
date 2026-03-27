@@ -1,0 +1,16 @@
+﻿# Secrets
+car-rental-system/backend/.env
+
+# Ignore nested duplicate project folder if present
+car-rental-system/car_rental/
+
+# Node
+node_modules/
+
+# Build outputs
+build/
+car-rental-system/build/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,13 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap");
+
+:root {
+  --bg-deep: #030712;
+  --bg: #0a0f1a;
+  --bg-elevated: #111827;
+  --surface: #141c2c;
+  --surface-2: #1a2438;
+  --surface-highlight: #1f2d45;
+  --navy-950: #030712;
+  --navy-900: #0f172a;
+  --navy-800: #1e293b;
+  --navy-700: #334155;
+  --accent: #22d3ee;
+  --accent-dim: #0891b2;
+  --accent-soft: rgba(34, 211, 238, 0.12);
+  --accent-glow: rgba(34, 211, 238, 0.35);
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border: rgba(148, 163, 184, 0.14);
+  --border-strong: rgba(148, 163, 184, 0.28);
+  --success: #34d399;
+  --danger: #f87171;
+  --warning: #fbbf24;
+  --radius: 16px;
+  --radius-sm: 11px;
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 32px 80px rgba(0, 0, 0, 0.55);
+  --transition: 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+  --font: "DM Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font);
+  color: var(--text);
+  background: radial-gradient(120% 80% at 50% -20%, #0c1929 0%, var(--bg-deep) 45%, #020617 100%);
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  min-height: 100vh;
+}
+
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+/* Reusable page entrance */
+.page-enter {
+  animation: page-enter 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-tilt-hover {
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition);
+}
+
+.card-tilt-hover:hover {
+  transform: perspective(900px) rotateX(2deg) rotateY(-3deg) translateY(-6px);
+  box-shadow: var(--shadow-lg), 0 0 0 1px var(--accent-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .card-tilt-hover:hover {
+    transform: none;
+  }
 }

@@ -1,0 +1,162 @@
+.ab-page {
+  min-height: 100vh;
+  padding: 1.5rem 1.25rem 3rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.ab-bg {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.03) 1px, transparent 1px);
+  background-size: 44px 44px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ab-header {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 1.5rem;
+}
+
+.ab-back {
+  display: inline-block;
+  margin-bottom: 0.65rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.ab-header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.ab-lead {
+  margin: 0.45rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.ab-muted {
+  position: relative;
+  z-index: 1;
+  color: var(--text-muted);
+}
+
+.ab-table-wrap {
+  position: relative;
+  z-index: 1;
+  overflow-x: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.ab-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.ab-table th {
+  text-align: left;
+  padding: 0.85rem 1rem;
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.72rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.ab-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+
+.ab-row {
+  animation: ab-row-in 0.45s ease both;
+}
+
+@keyframes ab-row-in {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.ab-row:hover {
+  background: rgba(34, 211, 238, 0.04);
+}
+
+.ab-name {
+  display: block;
+  font-weight: 600;
+}
+
+.ab-email {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.ab-sub {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.ab-status {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(148, 163, 184, 0.15);
+  color: var(--text-muted);
+}
+
+.ab-status--Booked {
+  background: rgba(52, 211, 153, 0.15);
+  color: var(--success);
+}
+
+.ab-status--Cancelled {
+  background: rgba(248, 113, 113, 0.12);
+  color: var(--danger);
+}
+
+.ab-cancel {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid rgba(248, 113, 113, 0.45);
+  background: rgba(248, 113, 113, 0.1);
+  color: #fecaca;
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.ab-cancel:hover {
+  background: rgba(248, 113, 113, 0.22);
+}
