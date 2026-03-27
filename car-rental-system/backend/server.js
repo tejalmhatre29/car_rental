@@ -167,24 +167,47 @@ res.send(result);
 
 /* DELETE CAR */
 
-app.delete("/deletecar/:id",(req,res)=>{
+app.delete("/deletecar/:id", (req, res) => {
 
-const id = req.params.id;
+  const id = req.params.id;
 
-const sql = "DELETE FROM cars WHERE id=?";
+  console.log("Trying to delete car:", id);
 
-db.query(sql,[id],(err,result)=>{
+  // STEP 1: Check bookings
+  db.query("SELECT COUNT(*) AS count FROM bookings WHERE car_id=?", [id], (err, result) => {
 
-if(err){
-console.log(err);
-return res.send({message:"Error deleting car"});
-}
+    if (err) {
+      console.log("CHECK ERROR:", err);
+      return res.send({ message: "Error checking bookings" });
+    }
 
-res.send({message:"Car deleted"});
+    const bookingCount = result[0].count;
+
+    console.log("Bookings found:", bookingCount);
+
+    // 🚫 STOP if booked
+    if (bookingCount > 0) {
+      return res.send({
+        message: "❌ Cannot delete: Car is already booked"
+      });
+    }
+
+    // STEP 2: Safe delete
+    db.query("DELETE FROM cars WHERE id=?", [id], (err2, result2) => {
+
+      if (err2) {
+        console.log("DELETE ERROR:", err2);
+        return res.send({ message: "Error deleting car" });
+      }
+
+      res.send({ message: "✅ Car deleted successfully" });
+
+    });
+
+  });
 
 });
 
-});
 
 
 /* UPDATE CAR */
